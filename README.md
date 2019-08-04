@@ -62,12 +62,14 @@ First step is to create a file `policies.json` and place this in project folder.
 ]
 ```
 
+
 | Params      | Type     | Purpose                                                                                                                                                                  |
 | ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | group       | `String` | This property defines the access group to which a user can belong to user, guest, admin.                                                                                 |
 | permissions | `String` | This property contains an array of objects that define the resources exposed to a group and the methods allowed/denied.                                                  |
 | methods     | `String` |                                                                                                                                                                          | `Array` | This are http methods that a user is allowed or denied from executing. ["POST", "GET", "PUT"]. use glob \* if you want to include all http methods. |
 | action      | `String` | This property tell access control what action to perform on the permission given. Using the above example, the user policy specifies a deny action, meaning all traffic. |
+
 
 ## Middleware
 
@@ -84,7 +86,9 @@ This methods loads the configuration json file or array os policies.
 | prefix (optional)   | The base url of your API `/api/v1`.                            |
 | policies (optional) | Allows you to set policies directly without using config file. |
 
+
 ```js
+
 const app = require('express');
 const path = require('path');
 const rbac = require('express-rbac-guard');
