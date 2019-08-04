@@ -12,7 +12,7 @@ const {
   deny,
   isAllowed
 } = require('../../lib/common');
-const policies = require('./../mocks/policies.mock.json');
+const policies = require('../mocks/policies.mock.json.js');
 
 describe('deny()', () => {
   it('Should return default deny Object', done => {
