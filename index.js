@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('./lib/policies');
-const rbac = require('./lib/access-control');
+const rbac = require('./lib/rbac');
 const { deny, findGroupFromRequest } = require('./lib/common');
 
 const options = {};
