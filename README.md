@@ -1,119 +1,172 @@
-# Express Access Control
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/55fd7fc2ca1a40f989cfd4fb08ef143f)](https://www.codacy.com/app/leonardofurnielis1/express-accesscontrol?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=leonardofurnielis1/express-accesscontrol&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/github/license/leonardofurnielis1/express-accesscontrol.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
-![npm](https://img.shields.io/npm/dt/@leonardofurnielis1/express-accesscontrol.svg)
-[![Coverage Status](https://coveralls.io/repos/github/leonardofurnielis1/express-accesscontrol/badge.svg?branch=master)](https://coveralls.io/github/leonardofurnielis1/express-accesscontrol?branch=master)
+# express-rbac-guard
+[![Build Status](https://travis-ci.org/lfurnielis/express-rbac-guard.svg?branch=master)](https://travis-ci.org/lfurnielis/express-rbac-guard)
+![GitHub](https://img.shields.io/github/license/lfurnielis/express-rbac-guard.svg)
+![npm](https://img.shields.io/npm/dm/express-rbac-guard.svg)
+[![Coverage Status](https://coveralls.io/repos/github/lfurnielis/express-rbac-guard/badge.svg?branch=master)](https://coveralls.io/github/lfurnielis/http-json-error-handler?branch=master)
+  
 
 Express Middleware for Role Based Access Control library enable you to manage the requests made to your express server.
 
+  
+
 ## Installation
 
-You can download `express-accesscontrol` from NPM
+  
+
+You can download `express-rbac-guard` from NPM
+
+  
 
 ```bash
-$ npm install @leonardofurnielis1/express-accesscontrol
+
+$ npm install express-rbac-guard
+
 ```
 
-then in your project require @leonardofurnielis1/express-accesscontrol
+  
+
+then in your project require
+  
 
 ```js
-const accessControl = require('@leonardofurnielis1/express-accesscontrol');
+
+const  rbac = require('express-rbac-guard');
+
 ```
+
+  
 
 or GitHub
 
+  
+
 ```bash
-$ git clone https://github.com/leonardofurnielis1/express-accesscontrol.git
+
+$ git clone https://github.com/lfurnielis/express-rbac-guard.git
+
 ```
+
+  
 
 ## Guide
 
+  
+
 First step is to create a file `policies.json` and place this in project folder. This is the file where we will define the roles that can access our application, and the policies that restrict or give access to certain resources.
+
+  
 
 **Configuration Example**
 
+  
+
 ```json
 [
-  {
-    "group": "admin",
-    "permissions": [
-      {
-        "resource": "*",
-        "methods": "*",
-        "action": "allow"
-      }
-    ]
-  }
-  {
-    "group": "guest",
-    "permissions": [
-      {
-        "resource": "/auth",
-        "methods": ["POST"],
-        "action": "allow"
-      }
-    ]
-  }
+
+	{
+
+		"group": "admin",
+		"permissions": [{
+			"resource": "*",
+			"methods": "*",
+			"action": "allow"
+		}]
+	},
+	{
+		"group": "guest",
+		"permissions": [{
+			"resource": "/auth",
+			"methods": ["POST"],
+			"action": "allow"
+		}]
+	}
 ]
 ```
 
-| Property        | Type              | Description                                                                                                                                                              |
-|-----------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **group**       | `string`          | This property defines the access group to which a user can belong to `user`, `guest`, `admin`.                                                                           |
-| **permissions** | `string`          | This property contains an array of objects that define the resources exposed to a group and the methods allowed/denied.                                                  |
-| **methods**     | `string || Array` | This are http methods that a user is allowed or denied from executing. `["POST", "GET", "PUT"]`. use glob `*` if you want to include all http methods.                   |
-| **action**      | `string`          | This property tell access control what action to perform on the permission given. Using the above example, the user policy specifies a deny action, meaning all traffic. |
+
+| Params      | Type                | Purpose                                                                                                                                                                  |
+|-------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| group       | `String`            | This property defines the access group to which a user can belong to user, guest, admin.                                                                                 |
+| permissions | `String`            | This property contains an array of objects that define the resources exposed to a group and the methods allowed/denied.                                                  |
+| methods     | `String` || `Array` | This are http methods that a user is allowed or denied from executing. ["POST", "GET", "PUT"]. use glob * if you want to include all http methods.                       |
+| action      | `String`            | This property tell access control what action to perform on the permission given. Using the above example, the user policy specifies a deny action, meaning all traffic. |  
 
 ## Middleware
 
+  
+
 **config\[type: function, params: options { filename<string>,path<string>, prefix, policies}]**
+
+  
 
 This methods loads the configuration json file or array os policies.
 
+  
+
 ### config
 
-*··**filename**: Name of the policies file `policies.json`
-*··**path**: Location of the policies file
-*··**prefix**: The base url of your API  `/api/v1`
-*··**policies**: Allows you to set policies directly without using config file.
+  | Params              | Purpose                                                        |
+|---------------------|----------------------------------------------------------------|
+| filename (optional) | Name of the policies file `policies.json`.                     |
+| path (optional)     | Location of the policies file.                                 |
+| prefix (optional)   | The base url of your API `/api/v1`.                            |
+| policies (optional) | Allows you to set policies directly without using config file. |
+  
 
 ```js
-const app = require('express');
-const accessControl = require('@leonardofurnielis1/express-accesscontrol');
-const path = require('path');
 
+const  app = require('express');
+const  path = require('path');
+const  rbac = require('express-rbac-guard');
+  
 // Using policies file
 
-accessControl.config({
-  prefix: '/api/v1',
-  path: path.join(__dirname, '/'),
-  filename: 'polices.json'
+rbac.config({
+	prefix:  '/api/v1',
+	path:  path.join(__dirname, '/'),
+	filename:  'polices.json'
 });
+
+  
 
 // Using policies from array
 
-accessControl.config({
-  accessControl: policiesArray,
-  prefix: '/api/v1'
+const policiesArray = [{
+		"group": "admin",
+		"permissions": [{
+			"resource": "*",
+			"methods": "*",
+			"action": "allow"
+		}]
+	}]; 
+	
+rbac.config({
+	accessControl:  policiesArray,
+	prefix:  '/api/v1'
 });
 
+ 
 // Setting express access control middleware
 
-app.use(accessControl.authorize());
+app.use(rbac.authorize());  
 
 ```
 
+  
+
 ## Customization
 
+ 
 To set custom message error / search path
 
 ```js
-accessControl.config(options, {
-	customMessage: '<Your denied message>',
-	// by default the middleware search user group into [req.group, req.session.group, default = 'guest']
+
+rbac.config(options, {
+	customMessage:  '<Your denied message>',
+	// by default the middleware search user group into [req.group, req.session.group, req.locals.group, if not match return `guest`]
 	// use `searchPath`, to get user group from diffetent path into request
-	searchPath: 'session.user.group' 
-	});
-};
+	searchPath:  'session.user.group'
+});
+
 ```
