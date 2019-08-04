@@ -2,7 +2,6 @@
 
 /* eslint-disable */
 
-const assert = require('assert');
 const {
   pathToArray,
   findGroupFromRequest,
@@ -10,18 +9,25 @@ const {
   findPermissionForRoute,
   findPermissionForMethod,
   deny,
-  isAllowed
+  isAllowed,
 } = require('../../lib/common');
-const policies = require('../mocks/policies.mock.json.js');
+
+const policies = require('../mocks/policies.mock.json');
 
 describe('deny()', () => {
   it('Should return default deny Object', done => {
-    expect(deny()).toEqual({ code: 403, message: 'Unauthorized access' });
+    expect(deny()).toEqual({
+      error: {
+        code: 403,
+        message: 'FORBIDDEN',
+        details: 'Unauthorized access',
+      },
+    });
     done();
   });
 
   it('Should return deny Object with custom message when is difined', done => {
-    expect(deny('This is a custom message').message).toBe('This is a custom message');
+    expect(deny('This is a custom message').error.details).toBe('This is a custom message');
     done();
   });
 });
@@ -55,6 +61,12 @@ describe('findGroupFromRequest()', () => {
     done();
   });
 
+  it('Should return user group from request into req.locals.group', done => {
+    const req = { locals: { group: 'admin' } };
+    expect(findGroupFromRequest(req)).toEqual('admin');
+    done();
+  });
+
   it('Should return user group from request into req.group', done => {
     const req = { group: 'admin' };
     expect(findGroupFromRequest(req)).toEqual('admin');
@@ -81,11 +93,13 @@ describe('findPermissionForGroup()', () => {
 });
 
 describe('findPermissionForRoute()', () => {
-  const permission = [{
-    resource: '/test',
-    methods: ['GET'],
-    action: 'allow'
-  }];
+  const permission = [
+    {
+      resource: '/test',
+      methods: ['GET'],
+      action: 'allow',
+    },
+  ];
 
   it('Should return policies array', done => {
     expect(findPermissionForRoute(policies, '/test')).toEqual(permission);
@@ -97,7 +111,7 @@ describe('findPermissionForRoute()', () => {
     done();
   });
 
-  it('Should return false when group don\'t have permission to this route', done => {
+  it("Should return false when group don't have permission to this route", done => {
     expect(findPermissionForRoute(policies, '/home')).toEqual(false);
     done();
   });
@@ -110,31 +124,37 @@ describe('findPermissionForRoute()', () => {
 
 describe('findPermissionForMethod()', () => {
   it('Should return policies array', done => {
-    const permission = [{
-      resource: '/test',
-      methods: ['GET'],
-      action: 'allow'
-    }];
+    const permission = [
+      {
+        resource: '/test',
+        methods: ['GET'],
+        action: 'allow',
+      },
+    ];
     expect(findPermissionForMethod(permission, 'GET')).toEqual(permission);
     done();
   });
 
   it('Should return policies array when policies method is *', done => {
-    const permission = [{
-      resource: '/test',
-      methods: '*',
-      action: 'allow'
-    }];
+    const permission = [
+      {
+        resource: '/test',
+        methods: '*',
+        action: 'allow',
+      },
+    ];
     expect(findPermissionForMethod(permission, 'POST')).toEqual(permission);
     done();
   });
 
-  it('Should return false when group don\'t have permission to this method', done => {
-    const permission = [{
-      resource: '/test',
-      methods: ['GET'],
-      action: 'allow'
-    }];
+  it("Should return false when group don't have permission to this method", done => {
+    const permission = [
+      {
+        resource: '/test',
+        methods: ['GET'],
+        action: 'allow',
+      },
+    ];
     expect(findPermissionForRoute(policies, 'POST')).toEqual(false);
     done();
   });
@@ -142,23 +162,26 @@ describe('findPermissionForMethod()', () => {
 
 describe('isAllowed()', () => {
   it('Should return policies array if action is allowed', done => {
-    const permission = [{
-      resource: '/test',
-      methods: ['GET'],
-      action: 'allow'
-    }];
+    const permission = [
+      {
+        resource: '/test',
+        methods: ['GET'],
+        action: 'allow',
+      },
+    ];
     expect(isAllowed(permission)).toEqual(permission);
     done();
   });
 
   it('Should return false when action is deny', done => {
-    const permission = [{
-      resource: '/test',
-      methods: '*',
-      action: 'deny'
-    }];
+    const permission = [
+      {
+        resource: '/test',
+        methods: '*',
+        action: 'deny',
+      },
+    ];
     expect(isAllowed(permission)).toEqual(false);
     done();
   });
 });
-
