@@ -1,0 +1,58 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true,
+    "mocha": true
+  },
+  "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "local",
+        "args": "none"
+      }
+    ],
+    "func-names": [
+      "error",
+      "never"
+    ],
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 140
+      }
+    ],
+    "no-await-in-loop": "off",
+    "no-plusplus": "off",
+    "global-require": "off",
+    "no-use-before-define": "off",
+    "no-param-reassign": "off",
+    "prefer-promise-reject-errors": "off",
+    "prefer-destructuring": "off",
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    "arrow-body-style": "off",
+    "no-console": "off",
+    "strict": "off"
+  }
+}

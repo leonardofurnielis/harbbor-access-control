@@ -1,0 +1,24 @@
+[
+  {
+    "group": "guest",
+    "permissions": [
+      {
+        "resource": "/test",
+        "methods": [
+          "GET"
+        ],
+        "action": "allow"
+      },
+      {
+        "resource": "/test/1",
+        "methods": "*",
+        "action": "allow"
+      },
+      {
+        "resource": "/access",
+        "methods": "*",
+        "action": "deny"
+      }
+    ]
+  }
+]

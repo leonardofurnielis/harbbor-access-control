@@ -1,0 +1,44 @@
+{
+  "name": "express-rbac-guard",
+  "version": "1.2.4",
+  "description": "Express Middleware for Role Based Access Control",
+  "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfurnielis/express-rbac-guard.git"
+  },
+  "keywords": [
+    "express",
+    "access control",
+    "rbac",
+    "authenticator",
+    "guard",
+    "auth",
+    "role based"
+  ],
+  "author": "Leonardo Furnielis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lfurnielis/express-rbac-guard/issues"
+  },
+  "homepage": "https://github.com/lfurnielis/express-rbac-guard#readme",
+  "devDependencies": {
+    "coveralls": "3.0.5",
+    "eslint": "6.1.0",
+    "eslint-config-airbnb": "17.1.1",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.14.3",
+    "jest": "24.8.0"
+  },
+  "dependencies": {
+    "joi": "14.3.1",
+    "object-path": "0.11.4"
+  }
+}
