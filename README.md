@@ -62,26 +62,23 @@ First step is to create a file `policies.json` and place this in project folder.
   
 
 ```json
-[
+[{
 
-	{
-
-		"group": "admin",
-		"permissions": [{
-			"resource": "*",
-			"methods": "*",
-			"action": "allow"
-		}]
-	},
-	{
-		"group": "guest",
-		"permissions": [{
-			"resource": "/auth",
-			"methods": ["POST"],
-			"action": "allow"
-		}]
-	}
-]
+	"group": "admin",
+	"permissions": [{
+		"resource": "*",
+		"methods": "*",
+		"action": "allow"
+	}]
+},
+{
+	"group": "guest",
+	"permissions": [{
+		"resource": "/auth",
+		"methods": ["POST"],
+		"action": "allow"
+	}]
+}]
 ```
 
 
