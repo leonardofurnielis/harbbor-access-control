@@ -87,6 +87,7 @@ This methods loads the configuration json file or array os policies.
 | policies (optional) | Allows you to set policies directly without using config file. |
 
 
+
 ```js
 
 const app = require('express');
