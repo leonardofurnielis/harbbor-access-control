@@ -13,62 +13,53 @@ const {
 const accessPolicies = require('../mock/access-policies.json');
 
 describe('pathToArray()', () => {
-  test('Should return tokens', (done) => {
+  test('Should return tokens', () => {
     expect(pathToArray('api/v1/test')).toEqual(['api', 'v1', 'test']);
-    done();
   });
 
-  test('When arguments is not type string, should return error', (done) => {
+  test('When arguments is not type string, should return error', () => {
     try {
       pathToArray(100);
     } catch (err) {
       expect(err.message).toEqual('The value must be string');
     }
-    done();
   });
 });
 
 describe('findAGFromRequest()', () => {
-  test('When access group not found, should return default access group', (done) => {
+  test('When access group not found, should return default access group', () => {
     const req = {};
     expect(findAGFromRequest(req)).toEqual('guest');
-    done();
   });
 
-  test('Should return user access group from request at req.session.group', (done) => {
+  test('Should return user access group from request at req.session.group', () => {
     const req = { session: { group: 'admin' } };
     expect(findAGFromRequest(req)).toEqual('admin');
-    done();
   });
 
-  test('Should return user access group from request at req.locals.group', (done) => {
+  test('Should return user access group from request at req.locals.group', () => {
     const req = { locals: { group: 'admin' } };
     expect(findAGFromRequest(req)).toEqual('admin');
-    done();
   });
 
-  test('Should return user access group from request at req.group', (done) => {
+  test('Should return user access group from request at req.group', () => {
     const req = { group: 'admin' };
     expect(findAGFromRequest(req)).toEqual('admin');
-    done();
   });
 
-  test('When custom access_group_search_path, should return user access group the custom path', (done) => {
+  test('When custom access_group_search_path, should return user access group the custom path', () => {
     const req = { session: { user: { group: 'admin' } } };
     expect(findAGFromRequest(req, 'session.user.group')).toEqual('admin');
-    done();
   });
 });
 
 describe('findAGPermission()', () => {
-  test('Should return guest access group array', (done) => {
+  test('Should return guest access group array', () => {
     expect(findAGPermission(accessPolicies, 'guest')).toEqual(accessPolicies[0].permissions);
-    done();
   });
 
-  test('When access group not exist, should return false', (done) => {
+  test('When access group not exist, should return false', () => {
     expect(findAGPermission(accessPolicies, 'not_found_access_group')).toEqual(false);
-    done();
   });
 });
 
@@ -86,31 +77,27 @@ describe('findRPPermission()', () => {
     },
   ];
 
-  test('Should return permissions for /test', (done) => {
+  test('Should return permissions for /test', () => {
     expect(findRPPermission(accessPolicies[0].permissions, '/test')).toEqual(permission);
-    done();
   });
 
-  test('When using prefix routes, should return permissions for /test', (done) => {
+  test('When using prefix routes, should return permissions for /test', () => {
     expect(findRPPermission(accessPolicies[0].permissions, '/api/v1/test', '/api/v1')).toEqual(
       permission
     );
-    done();
   });
 
-  test("When access group doesn't have permission, should return false ", (done) => {
+  test("When access group doesn't have permission, should return false ", () => {
     expect(findRPPermission(accessPolicies[0].permissions, '/home')).toEqual(false);
-    done();
   });
 
-  test('When request path not found, should return false', (done) => {
+  test('When request path not found, should return false', () => {
     expect(findRPPermission(accessPolicies[0].permissions, '/foo')).toEqual(false);
-    done();
   });
 });
 
 describe('findMethodPermission()', () => {
-  test('Should return permissions for GET /test', (done) => {
+  test('Should return permissions for GET /test', () => {
     const permission = [
       {
         resource: '/test',
@@ -119,10 +106,9 @@ describe('findMethodPermission()', () => {
       },
     ];
     expect(findMethodPermission(permission, 'GET')).toEqual(permission);
-    done();
   });
 
-  test('When access policies method is *, should return permissions for * /test', (done) => {
+  test('When access policies method is *, should return permissions for * /test', () => {
     const permission = [
       {
         resource: '/test',
@@ -131,15 +117,13 @@ describe('findMethodPermission()', () => {
       },
     ];
     expect(findMethodPermission(permission, 'POST')).toEqual(permission);
-    done();
   });
 
-  test("Should return false when group don't have permission to this method", (done) => {
+  test("Should return false when group don't have permission to this method", () => {
     expect(findRPPermission(accessPolicies[0].permissions, 'POST')).toEqual(false);
-    done();
   });
 
-  test('When multiple permission and deny specific method, should return false', (done) => {
+  test('When multiple permission and deny specific method, should return false', () => {
     const permission = [
       {
         resource: '/test/1',
@@ -153,10 +137,9 @@ describe('findMethodPermission()', () => {
       },
     ];
     expect(findMethodPermission(permission, 'UPDATE')).toEqual(false);
-    done();
   });
 
-  test('When multiple permission allow all methods, should return permission for * /test', (done) => {
+  test('When multiple permission allow all methods, should return permission for * /test', () => {
     const permission = [
       {
         resource: '/test/1',
@@ -171,10 +154,9 @@ describe('findMethodPermission()', () => {
     ];
 
     expect(findMethodPermission(permission, 'GET')).toEqual([permission[0]]);
-    done();
   });
 
-  test('When multiple permission and allow specific method, should return permission for UPDATE /test/1', (done) => {
+  test('When multiple permission and allow specific method, should return permission for UPDATE /test/1', () => {
     const permission = [
       {
         resource: '/test/1',
@@ -189,10 +171,9 @@ describe('findMethodPermission()', () => {
     ];
 
     expect(findMethodPermission(permission, 'UPDATE')).toEqual([permission[1]]);
-    done();
   });
 
-  test('When multiple permission deny all methods, should return false', (done) => {
+  test('When multiple permission deny all methods, should return false', () => {
     const permission = [
       {
         resource: '/test/1',
@@ -208,12 +189,11 @@ describe('findMethodPermission()', () => {
 
     // console.log('>>', findMethodPermission(permission, 'GET'));
     expect(findMethodPermission(permission, 'GET')).toEqual(false);
-    done();
   });
 });
 
 describe('isAllowed()', () => {
-  test('When action is allow, should return access policies for /test', (done) => {
+  test('When action is allow, should return access policies for /test', () => {
     const permission = [
       {
         resource: '/test',
@@ -222,10 +202,9 @@ describe('isAllowed()', () => {
       },
     ];
     expect(isAllowed(permission)).toEqual(permission);
-    done();
   });
 
-  test('When action is deny, should return false', (done) => {
+  test('When action is deny, should return false', () => {
     const permission = [
       {
         resource: '/test',
@@ -234,12 +213,11 @@ describe('isAllowed()', () => {
       },
     ];
     expect(isAllowed(permission)).toEqual(false);
-    done();
   });
 });
 
 describe('deny()', () => {
-  test('Should return default deny object', (done) => {
+  test('Should return default deny object', () => {
     expect(deny()).toEqual({
       error: {
         status_code: 403,
@@ -247,11 +225,9 @@ describe('deny()', () => {
         message: 'Unauthorized Access',
       },
     });
-    done();
   });
 
-  test('When custom message is defined, should return deny object with custom message', (done) => {
+  test('When custom message is defined, should return deny object with custom message', () => {
     expect(deny('This is a custom message').error.message).toBe('This is a custom message');
-    done();
   });
 });
