@@ -18,9 +18,24 @@
         "action": "allow"
       },
       {
+        "resource": "/test/1",
+        "methods": "UPDATE",
+        "action": "deny"
+      },
+      {
         "resource": "/access",
         "methods": "*",
         "action": "deny"
+      }
+    ]
+  },
+  {
+    "access_group": "admin",
+    "permissions": [
+      {
+        "resource": "/home",
+        "methods": "*",
+        "action": "allow"
       }
     ]
   }

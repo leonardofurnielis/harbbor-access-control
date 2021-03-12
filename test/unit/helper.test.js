@@ -13,47 +13,47 @@ const {
 const accessPolicies = require('../mock/access-policies.json');
 
 describe('pathToArray()', () => {
-  it('Should return array of string', (done) => {
+  test('Should return tokens', (done) => {
     expect(pathToArray('api/v1/test')).toEqual(['api', 'v1', 'test']);
     done();
   });
 
-  it('Should return error when arguments is not type string', (done) => {
+  test('When arguments is not type string, should return error', (done) => {
     try {
       pathToArray(100);
     } catch (err) {
-      expect(err.message).toEqual('Only string arguments are allowed');
+      expect(err.message).toEqual('The value must be string');
     }
     done();
   });
 });
 
 describe('findAGFromRequest()', () => {
-  it('Should return default group if not found group', (done) => {
+  test('When access group not found, should return default access group', (done) => {
     const req = {};
     expect(findAGFromRequest(req)).toEqual('guest');
     done();
   });
 
-  it('Should return user group from request into req.session.group', (done) => {
+  test('Should return user access group from request at req.session.group', (done) => {
     const req = { session: { group: 'admin' } };
     expect(findAGFromRequest(req)).toEqual('admin');
     done();
   });
 
-  it('Should return user group from request into req.locals.group', (done) => {
+  test('Should return user access group from request at req.locals.group', (done) => {
     const req = { locals: { group: 'admin' } };
     expect(findAGFromRequest(req)).toEqual('admin');
     done();
   });
 
-  it('Should return user group from request into req.group', (done) => {
+  test('Should return user access group from request at req.group', (done) => {
     const req = { group: 'admin' };
     expect(findAGFromRequest(req)).toEqual('admin');
     done();
   });
 
-  it('Should return user group from request into searchPath', (done) => {
+  test('When custom access_group_search_path, should return user access group the custom path', (done) => {
     const req = { session: { user: { group: 'admin' } } };
     expect(findAGFromRequest(req, 'session.user.group')).toEqual('admin');
     done();
@@ -61,12 +61,12 @@ describe('findAGFromRequest()', () => {
 });
 
 describe('findAGPermission()', () => {
-  it('Should return selected group array', (done) => {
+  test('Should return guest access group array', (done) => {
     expect(findAGPermission(accessPolicies, 'guest')).toEqual(accessPolicies[0].permissions);
     done();
   });
 
-  it('Should return false if group not exist', (done) => {
+  test('When access group not exist, should return false', (done) => {
     expect(findAGPermission(accessPolicies, 'admin')).toEqual(false);
     done();
   });
@@ -86,29 +86,31 @@ describe('findRPPermission()', () => {
     },
   ];
 
-  it('Should return accessPolicies array', (done) => {
+  test('Should return permissions for /test', (done) => {
     expect(findRPPermission(accessPolicies[0].permissions, '/test')).toEqual(permission);
     done();
   });
 
-  it('Should return accessPolicies array when using prefix routes', (done) => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/api/v1/test', '/api/v1')).toEqual(permission);
+  test('When using prefix routes, should return permissions for /test', (done) => {
+    expect(findRPPermission(accessPolicies[0].permissions, '/api/v1/test', '/api/v1')).toEqual(
+      permission
+    );
     done();
   });
 
-  it("Should return false when group don't have permission to this route", (done) => {
+  test("When access group doesn't have permission, should return false ", (done) => {
     expect(findRPPermission(accessPolicies[0].permissions, '/home')).toEqual(false);
     done();
   });
 
-  it('Should return false when prefix is empty', (done) => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/api/v1/test')).toEqual(false);
+  test('When request path not found, should return false', (done) => {
+    expect(findRPPermission(accessPolicies[0].permissions, '/foo')).toEqual(false);
     done();
   });
 });
 
 describe('findMethodPermission()', () => {
-  it('Should return accessPolicies array', (done) => {
+  test('Should return permissions for GET /test', (done) => {
     const permission = [
       {
         resource: '/test',
@@ -120,7 +122,7 @@ describe('findMethodPermission()', () => {
     done();
   });
 
-  it('Should return accessPolicies array when accessPolicies method is *', (done) => {
+  test('When access policies method is *, should return permissions for * /test ', (done) => {
     const permission = [
       {
         resource: '/test',
@@ -132,14 +134,14 @@ describe('findMethodPermission()', () => {
     done();
   });
 
-  it("Should return false when group don't have permission to this method", (done) => {
+  test("Should return false when group don't have permission to this method", (done) => {
     expect(findRPPermission(accessPolicies[0].permissions, 'POST')).toEqual(false);
     done();
   });
 });
 
 describe('isAllowed()', () => {
-  it('Should return accessPolicies array if action is allowed', (done) => {
+  test('When action is allow, should return access policies for /test', (done) => {
     const permission = [
       {
         resource: '/test',
@@ -151,7 +153,7 @@ describe('isAllowed()', () => {
     done();
   });
 
-  it('Should return false when action is deny', (done) => {
+  test('When action is deny, should return false', (done) => {
     const permission = [
       {
         resource: '/test',
@@ -165,7 +167,7 @@ describe('isAllowed()', () => {
 });
 
 describe('deny()', () => {
-  it('Should return default deny Object', (done) => {
+  test('Should return default deny object', (done) => {
     expect(deny()).toEqual({
       error: {
         status_code: 403,
@@ -176,7 +178,7 @@ describe('deny()', () => {
     done();
   });
 
-  it('Should return deny Object with custom message when is difined', (done) => {
+  test('When custom message is defined, should return deny object with custom message', (done) => {
     expect(deny('This is a custom message').error.message).toBe('This is a custom message');
     done();
   });
