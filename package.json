@@ -1,47 +1,53 @@
 {
-  "name": "express-rbac-guard",
+  "name": "express-iam",
   "version": "1.0.1",
-  "description": "Express Middleware for Role Based Access Control",
+  "description": "Express Middleware for Identity and Access Management",
   "main": "index.js",
-  "engines": {
-    "node": "10.x"
-  },
   "scripts": {
-    "test": "jest --coverage"
+    "lint": "eslint .",
+    "test": "npm run lint && jest --coverage --verbose",
+    "precommit": "pretty-quick --staged"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lfurnielis/express-rbac-guard.git"
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "keywords": [
     "express",
-    "access control",
-    "rbac",
-    "authenticator",
-    "guard",
-    "auth",
-    "role based"
+    "identity",
+    "access",
+    "management",
+    "access-management",
+    "access-control",
+    "iam",
+    "policy",
+    "role",
+    "permissions",
+    "security"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardofurnielis/express-iam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leonardofurnielis/express-iam/issues"
+  },
+  "homepage": "https://github.com/leonardofurnielis/express-iam#readme",
   "author": "Leonardo Furnielis",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lfurnielis/express-rbac-guard/issues"
-  },
-  "homepage": "https://github.com/lfurnielis/express-rbac-guard#readme",
-  "devDependencies": {
-    "coveralls": "3.0.6",
-    "eslint": "6.2.2",
-    "eslint-config-airbnb": "18.0.1",
-    "eslint-config-prettier": "6.1.0",
-    "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-prettier": "3.1.0",
-    "eslint-plugin-react": "7.14.3",
-    "jest": "24.9.0",
-    "prettier": "1.18.2"
-  },
   "dependencies": {
-    "joi": "14.3.1",
+    "joi": "17.4.0",
     "object-path": "0.11.5"
+  },
+  "devDependencies": {
+    "codecov": "3.8.1",
+    "eslint": "7.21.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-jest": "24.2.1",
+    "eslint-plugin-prettier": "3.3.1",
+    "jest": "26.6.3",
+    "node-mocks-http": "1.10.1",
+    "prettier": "2.2.1",
+    "pretty-quick": "3.1.0"
   }
 }

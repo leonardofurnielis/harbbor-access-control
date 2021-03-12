@@ -1,33 +1,33 @@
-# express-rbac-guard
+# express-iam
 
-[![Build Status](https://travis-ci.org/lfurnielis/express-rbac-guard.svg?branch=master)](https://travis-ci.org/lfurnielis/express-rbac-guard)
-![GitHub](https://img.shields.io/github/license/lfurnielis/express-rbac-guard.svg)
-![npm](https://img.shields.io/npm/dm/express-rbac-guard.svg)
-[![Coverage Status](https://coveralls.io/repos/github/lfurnielis/express-rbac-guard/badge.svg?branch=master)](https://coveralls.io/github/lfurnielis/http-json-error-handler?branch=master)
+[![Build Status](https://travis-ci.org/lfurnielis/express-iam.svg?branch=master)](https://travis-ci.org/lfurnielis/express-iam)
+![GitHub](https://img.shields.io/github/license/lfurnielis/express-iam.svg)
+![npm](https://img.shields.io/npm/dm/express-iam.svg)
+[![Coverage Status](https://coveralls.io/repos/github/lfurnielis/express-iam/badge.svg?branch=master)](https://coveralls.io/github/lfurnielis/http-json-error-handler?branch=master)
 
 Express Middleware for Role Based Access Control library enable you to manage the requests made to your express server.
 
 ## Installation
 
-You can download `express-rbac-guard` from NPM
+You can download `express-iam` from NPM
 
 ```bash
 
-$ npm install express-rbac-guard
+$ npm install express-iam
 
 ```
 
 then in your project require
 
 ```js
-const rbac = require('express-rbac-guard');
+const rbac = require('express-iam');
 ```
 
 or GitHub
 
 ```bash
 
-$ git clone https://github.com/lfurnielis/express-rbac-guard.git
+$ git clone https://github.com/lfurnielis/express-iam.git
 
 ```
 
@@ -92,7 +92,7 @@ This methods loads the configuration json file or array os policies.
 
 const app = require('express');
 const path = require('path');
-const rbac = require('express-rbac-guard');
+const rbac = require('express-iam');
 
 // Using policies file
 
