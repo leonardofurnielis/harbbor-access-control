@@ -1,34 +1,40 @@
 'use strict';
 
-const assert = require('./lib/policies');
+const AccessPolicies = require('./lib/access-policies-schema');
 const rbac = require('./lib/rbac');
-const { deny, findGroupFromRequest } = require('./lib/common');
+const { deny, findGroupFromRequest } = require('./lib/helper');
 
 const options = {};
-const customize = {};
 
 const authorize = () => {
   return function (req, res, next) {
-    const group = findGroupFromRequest(req, customize.searchPath);
-    const accesscontrol = rbac(options.policies, req.path, req.method, group, options.prefix);
+    const access_group = findGroupFromRequest(req, options.role_search_path);
+    const accesscontrol = rbac(
+      options.access_policies,
+      req.path,
+      req.method,
+      access_group,
+      options.prefix
+    );
 
     if (accesscontrol.isAllowed) {
       next();
     } else {
-      res.status(403).json(deny(customize.customMessage));
+      res.status(403).json(deny(options.custom_message));
     }
   };
 };
 
-const config = (opts = {}, ctz = {}) => {
-  options.prefix = opts.prefix || undefined;
-  options.policies = assert(opts);
-
-  customize.customMessage = ctz.customMessage || undefined;
-  customize.searchPath = ctz.searchPath || undefined;
+const config = (params = {}) => {
+  options.path = params.path || undefined;
+  options.prefix = params.prefix || undefined;
+  options.default_access_group = params.default_access_group || undefined;
+  options.custom_message = params.custom_message || undefined;
+  options.role_search_path = params.role_search_path || undefined;
+  options.access_policies = AccessPolicies.validate(params);
 };
 
 module.exports = {
   config,
-  authorize
+  authorize,
 };
