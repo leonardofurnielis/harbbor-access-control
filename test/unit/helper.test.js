@@ -67,7 +67,7 @@ describe('findAGPermission()', () => {
   });
 
   test('When access group not exist, should return false', (done) => {
-    expect(findAGPermission(accessPolicies, 'admin')).toEqual(false);
+    expect(findAGPermission(accessPolicies, 'not_found_access_group')).toEqual(false);
     done();
   });
 });
