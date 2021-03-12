@@ -1,13 +1,16 @@
 [
   {
-    "group": "guest",
+    "access_group": "guest",
     "permissions": [
       {
         "resource": "/test",
-        "methods": [
-          "GET"
-        ],
+        "methods": ["GET"],
         "action": "allow"
+      },
+      {
+        "resource": "/test",
+        "methods": ["POST"],
+        "action": "deny"
       },
       {
         "resource": "/test/1",
