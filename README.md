@@ -1,9 +1,7 @@
 # express-iam
 
-[![Build Status](https://travis-ci.org/lfurnielis/express-iam.svg?branch=master)](https://travis-ci.org/lfurnielis/express-iam)
-![GitHub](https://img.shields.io/github/license/lfurnielis/express-iam.svg)
-![npm](https://img.shields.io/npm/dm/express-iam.svg)
-[![Coverage Status](https://coveralls.io/repos/github/lfurnielis/express-iam/badge.svg?branch=master)](https://coveralls.io/github/lfurnielis/http-json-error-handler?branch=master)
+[![Build Status](https://travis-ci.org/leonardofurnielis/express-iam.svg?branch=master)](https://travis-ci.org/leonardofurnielis/express-iam)
+![GitHub](https://img.shields.io/github/license/leonardofurnielis/express-iam)
 
 Express Middleware for Role Based Access Control library enable you to manage the requests made to your express server.
 
