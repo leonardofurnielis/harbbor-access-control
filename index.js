@@ -2,7 +2,7 @@
 
 const AccessPolicies = require('./lib/access-policies-schema');
 const iam = require('./lib/iam');
-const { deny, findAGFromRequest } = require('./lib/helper');
+const { deny, findAGFromRequest } = require('./lib/common');
 
 const options = {};
 

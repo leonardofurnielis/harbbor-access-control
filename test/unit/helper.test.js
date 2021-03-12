@@ -8,7 +8,7 @@ const {
   findMethodPermission,
   isAllowed,
   deny,
-} = require('../../lib/helper');
+} = require('../../lib/common');
 
 const accessPolicies = require('../mock/access-policies.json');
 
@@ -122,7 +122,7 @@ describe('findMethodPermission()', () => {
     done();
   });
 
-  test('When access policies method is *, should return permissions for * /test ', (done) => {
+  test('When access policies method is *, should return permissions for * /test', (done) => {
     const permission = [
       {
         resource: '/test',
@@ -136,6 +136,78 @@ describe('findMethodPermission()', () => {
 
   test("Should return false when group don't have permission to this method", (done) => {
     expect(findRPPermission(accessPolicies[0].permissions, 'POST')).toEqual(false);
+    done();
+  });
+
+  test('When multiple permission and deny specific method, should return false', (done) => {
+    const permission = [
+      {
+        resource: '/test/1',
+        methods: '*',
+        action: 'allow',
+      },
+      {
+        resource: '/test/1',
+        methods: 'UPDATE',
+        action: 'deny',
+      },
+    ];
+    expect(findMethodPermission(permission, 'UPDATE')).toEqual(false);
+    done();
+  });
+
+  test('When multiple permission allow all methods, should return permission for * /test', (done) => {
+    const permission = [
+      {
+        resource: '/test/1',
+        methods: '*',
+        action: 'allow',
+      },
+      {
+        resource: '/test/1',
+        methods: 'UPDATE',
+        action: 'deny',
+      },
+    ];
+
+    expect(findMethodPermission(permission, 'GET')).toEqual([permission[0]]);
+    done();
+  });
+
+  test('When multiple permission and allow specific method, should return permission for UPDATE /test/1', (done) => {
+    const permission = [
+      {
+        resource: '/test/1',
+        methods: '*',
+        action: 'deny',
+      },
+      {
+        resource: '/test/1',
+        methods: 'UPDATE',
+        action: 'allow',
+      },
+    ];
+
+    expect(findMethodPermission(permission, 'UPDATE')).toEqual([permission[1]]);
+    done();
+  });
+
+  test('When multiple permission deny all methods, should return false', (done) => {
+    const permission = [
+      {
+        resource: '/test/1',
+        methods: '*',
+        action: 'deny',
+      },
+      {
+        resource: '/test/1',
+        methods: 'UPDATE',
+        action: 'allow',
+      },
+    ];
+
+    // console.log('>>', findMethodPermission(permission, 'GET'));
+    expect(findMethodPermission(permission, 'GET')).toEqual(false);
     done();
   });
 });
