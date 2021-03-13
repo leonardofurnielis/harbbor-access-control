@@ -1,19 +1,29 @@
 'use strict';
 
-//const iam = require('../../lib/iam');
+const iam = require('../../lib/iam');
 
-//const accessPolicies = require('../mock/access-policies.json');
+const accessPolicies = require('../mock/access-policies.json');
 
-// describe('pathToArray()', () => {
-//   test('Should return tokens', () => {
-//     expect(pathToArray('api/v1/test')).toEqual(['api', 'v1', 'test']);
-//   });
+describe('identityAccessManagement()', () => {
+  test('When user is authorized, should return true', () => {
+    expect(iam(accessPolicies, '/api/test', 'GET', 'guest', '/api')).toEqual(true);
+  });
 
-//   test('When arguments is not type string, should return error', () => {
-//     try {
-//       pathToArray(100);
-//     } catch (err) {
-//       expect(err.message).toEqual('The value must be string');
-//     }
-//   });
-// });
+  test('When arguments not found, should return false', () => {
+    expect(iam(accessPolicies, undefined, 'GET', 'guest', '/api')).toEqual(false);
+  });
+
+  test('When use function, should return true', () => {
+    expect(
+      iam(
+        () => {
+          return accessPolicies;
+        },
+        '/api/test',
+        'GET',
+        'guest',
+        '/api'
+      )
+    ).toEqual(true);
+  });
+});
