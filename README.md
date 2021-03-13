@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/leonardofurnielis/express-iam.svg?branch=master)](https://travis-ci.org/leonardofurnielis/express-iam)
 [![codecov](https://codecov.io/gh/leonardofurnielis/express-iam/branch/master/graph/badge.svg?token=MKNBSDCL7N)](https://codecov.io/gh/leonardofurnielis/express-iam)
 ![GitHub](https://img.shields.io/github/license/leonardofurnielis/express-iam)
+![npm](https://img.shields.io/npm/dm/express-iam)
 
   
 
