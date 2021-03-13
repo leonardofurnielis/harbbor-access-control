@@ -16,7 +16,6 @@ Express Middleware for Identity and Access Management, this library enable you t
 
   
   ```bash
-
 $ npm install express-iam --save
 
 ```
@@ -42,31 +41,31 @@ First step is to create your access policies, it could be stored in a database, 
   
 ```json
 [
- {
-  "access_group":  "admin",
-  "permissions": [
-   {
-    "resource":  "*",
-		"methods":  "*",
-		"action":  "allow"
-		}
+	{
+	"access_group":  "admin",
+	"permissions": [
+			{
+			"resource":  "*",
+			"methods":  "*",
+			"action":  "allow"
+			}
 		]
 	},
 	{
 	"access_group":  "guest",
 	"permissions": [
-		{
-		 "resource":  "/foo",
-		 "methods": ["POST"],
-		 "action":  "allow"
-		},
-		{
-		 "resource":  "/foo2",
-		 "methods": ["POST","UPDATE"],
-		 "action":  "deny"
-		},			
-   ]
- }
+			{
+			 "resource":  "/foo",
+		 	"methods": ["POST"],
+		 	"action":  "allow"
+			},
+			{
+		 	"resource":  "/foo2",
+		 	"methods": ["POST","UPDATE"],
+		 	"action":  "deny"
+			}
+		]
+ 	}
 ]
 
 ```
