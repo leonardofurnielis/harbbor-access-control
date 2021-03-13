@@ -2,11 +2,8 @@
 
   
 ![npm](https://img.shields.io/npm/v/express-iam)
-
 [![Build Status](https://travis-ci.org/leonardofurnielis/express-iam.svg?branch=master)](https://travis-ci.org/leonardofurnielis/express-iam)
-
 [![codecov](https://codecov.io/gh/leonardofurnielis/express-iam/branch/master/graph/badge.svg?token=MKNBSDCL7N)](https://codecov.io/gh/leonardofurnielis/express-iam)
-
 ![GitHub](https://img.shields.io/github/license/leonardofurnielis/express-iam)
 
   
@@ -45,31 +42,31 @@ First step is to create your access policies, it could be stored in a database, 
   
 ```json
 [
-	{
-	"access_group":  "admin",
-		"permissions": [
-			{
-				"resource":  "*",
-				"methods":  "*",
-				"action":  "allow"
-			}
+ {
+  "access_group":  "admin",
+  "permissions": [
+   {
+    "resource":  "*",
+		"methods":  "*",
+		"action":  "allow"
+		}
 		]
 	},
 	{
 	"access_group":  "guest",
-		"permissions": [
-			{
-				"resource":  "/foo",
-				"methods": ["POST"],
-				"action":  "allow"
-			},
-			{
-				"resource":  "/foo2",
-				"methods": ["POST","UPDATE"],
-				"action":  "deny"
-			},			
-		]
-	}
+	"permissions": [
+		{
+		 "resource":  "/foo",
+		 "methods": ["POST"],
+		 "action":  "allow"
+		},
+		{
+		 "resource":  "/foo2",
+		 "methods": ["POST","UPDATE"],
+		 "action":  "deny"
+		},			
+   ]
+ }
 ]
 
 ```
