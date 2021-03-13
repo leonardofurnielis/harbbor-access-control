@@ -39,7 +39,8 @@ First step is to create your access control, it could be stored in a database, f
 | resource | `String` | The route that the permission will be applied. Use `*` to include all routes or sub-routes. e.g. `/foo/*`. |
 | methods | `String \| Array` | The methods that the permission will be applied. Use `*` to include all methods. |
 | action | `String` | This property tells `express-iam` what action will be applied on the permission, deny or allow. |
-  
+
+
 ```json
 [
 	{
