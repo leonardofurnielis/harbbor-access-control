@@ -1,132 +1,139 @@
-# express-iam
+#  express-iam
+
+  
+![npm](https://img.shields.io/npm/v/express-iam)
 
 [![Build Status](https://travis-ci.org/leonardofurnielis/express-iam.svg?branch=master)](https://travis-ci.org/leonardofurnielis/express-iam)
+
 [![codecov](https://codecov.io/gh/leonardofurnielis/express-iam/branch/master/graph/badge.svg?token=MKNBSDCL7N)](https://codecov.io/gh/leonardofurnielis/express-iam)
+
 ![GitHub](https://img.shields.io/github/license/leonardofurnielis/express-iam)
 
-Express Middleware for Role Based Access Control library enable you to manage the requests made to your express server.
+  
 
-## Installation
+Express Middleware for Identity and Access Management, this library enable you to manage the requests made to your express server.
 
-You can download `express-iam` from NPM
+  
 
-```bash
+##  Installation
 
-$ npm install express-iam
+  
+  ```bash
 
-```
-
-then in your project require
-
-```js
-const rbac = require('express-iam');
-```
-
-or GitHub
-
-```bash
-
-$ git clone https://github.com/lfurnielis/express-iam.git
+$ npm install express-iam --save
 
 ```
+  
 
-## Guide
+##  Use
 
-First step is to create a file `policies.json` and place this in project folder. This is the file where we will define the roles that can access our application, and the policies that restrict or give access to certain resources.
+  
 
-**Configuration Example**
+First step is to create your access policies, it could be stored in a database, file or a simple array, the structure should follow the below example.
 
+  
+
+### Definition of Access Policies
+
+| Option | Default | Description |
+| ------ |---------| ------------ |
+| access_group | `String` | The access group with name. |
+| permissions | `Array` | Array of permissions that defined to an access group, to allow or deny. |
+| resource | `String` | The route that the permission will be applied. Use `*` to include all routes or sub-routes. e.g. `/foo/*`. |
+| methods | `String \| Array` | The methods that the permission will be applied. Use `*` to include all methods. |
+| action | `String` | This property tells `express-iam` what action will be applied on the permission, deny or allow. |
+  
 ```json
 [
-  {
-    "group": "admin",
-    "permissions": [
-      {
-        "resource": "*",
-        "methods": "*",
-        "action": "allow"
-      }
-    ]
-  },
-  {
-    "group": "guest",
-    "permissions": [
-      {
-        "resource": "/auth",
-        "methods": ["POST"],
-        "action": "allow"
-      }
-    ]
-  }
+	{
+	"access_group":  "admin",
+		"permissions": [
+			{
+				"resource":  "*",
+				"methods":  "*",
+				"action":  "allow"
+			}
+		]
+	},
+	{
+	"access_group":  "guest",
+		"permissions": [
+			{
+				"resource":  "/foo",
+				"methods": ["POST"],
+				"action":  "allow"
+			},
+			{
+				"resource":  "/foo2",
+				"methods": ["POST","UPDATE"],
+				"action":  "deny"
+			},			
+		]
+	}
 ]
+
 ```
 
-| Params      | Type     | Purpose                                                                                                                                                                  |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| group       | `String` | This property defines the access group to which a user can belong to user, guest, admin.                                                                                 |
-| permissions | `String` | This property contains an array of objects that define the resources exposed to a group and the methods allowed/denied.                                                  |
-| methods     | `String` |                                                                                                                                                                          | `Array` | This are http methods that a user is allowed or denied from executing. ["POST", "GET", "PUT"]. use glob \* if you want to include all http methods. |
-| action      | `String` | This property tell access control what action to perform on the permission given. Using the above example, the user policy specifies a deny action, meaning all traffic. |
 
-## Middleware
+## config\[type: function]
+This methods loads the configuration to express-iam.
 
-**config\[type: function, params: options { filename<string>,path<string>, prefix, policies}]**
+| Option | Default | Description |
+| ------ |---------| ------------ |
+| access_policies | `Array \| Function` | The access policies array or function. |
+| [access_group_search_path] | `String` | The path in request object where access group resides. |
+| [custom_message] | `String` | The custom message when user is denied. |
+| [default_access_group] | `String` | The default access_group to be assigned if no role defined. |
+| [prefix] | `String` | The base URL of your api. e.g. `api/v1`. |
+  
 
-This methods loads the configuration json file or array os policies.
-
-### config
-
-| Params              | Purpose                                                        |
-| ------------------- | -------------------------------------------------------------- |
-| filename (optional) | Name of the policies file `policies.json`.                     |
-| path (optional)     | Location of the policies file.                                 |
-| prefix (optional)   | The base url of your API `/api/v1`.                            |
-| policies (optional) | Allows you to set policies directly without using config file. |
 
 ```js
 const app = require('express');
 const path = require('path');
-const rbac = require('express-iam');
+const fs = require('fs');
+const expressIAM = require('express-iam');
 
-// Using policies file
-
-rbac.config({
-  prefix: '/api/v1',
-  path: path.join(__dirname, '/'),
-  filename: 'polices.json',
+// Using access policies from file
+const accessPoliciesFile =  fs.readFileSync(path.join(__dirname,  './access-policies/access-policies.json'));
+expressIAM.config({
+	prefix:  '/api/v1',
+	access_policies:  accessPoliciesFile,
 });
 
-// Using policies from array
+// Using access policies from array
+const  accessPoliciesArray = [
+	{
+		group:  'admin',
+			permissions:  [
+				{
+					resource:  '*',
+					methods:  '*',
+					action:  'allow',
+				},
+			],
+		},
+	];
 
-const policiesArray = [
-  {
-    group: 'admin',
-    permissions: [
-      {
-        resource: '*',
-        methods: '*',
-        action: 'allow',
-      },
-    ],
-  },
-];
-
-rbac.config({ accessControl: policiesArray, prefix: '/api/v1' });
-
-// Setting express access control middleware
-
-app.use(rbac.authorize());
+expressIAM.config({  
+access_policies:  accessPoliciesArray,  
+prefix:  '/api/v1'  });
 ```
 
-## Customization
+## authorize\[type: function]
+This methods is the middleware to express-iam manage your requests.
 
-To set custom message error / search path
+In an [express](https://www.npmjs.com/package/express) based application:
 
 ```js
-rbac.config(options, {
-  customMessage: '<Your denied message>',
-  // by default the middleware search user group into [req.group, req.session.group, req.locals.group, if not match return `guest`]
-  // use `searchPath`, to get user group from diffetent path into request
-  searchPath: 'session.user.group',
-});
+const express = require('express');
+const app = express();
+
+app.use(expressIAM.authorize());
+
 ```
+
+##  License
+
+  
+[MIT](LICENSE)
