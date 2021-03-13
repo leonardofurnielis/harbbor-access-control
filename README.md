@@ -93,7 +93,9 @@ const fs = require('fs');
 const expressIAM = require('express-iam');
 
 // Using access control from file
-const accessControlFile =  fs.readFileSync(path.join(__dirname,  './access-control/access-control.json'));
+const accessControlFile =  fs.readFileSync(
+  path.join(__dirname,  './access-control/access-control.json'));
+  
 expressIAM.config({
 	prefix:  '/api/v1',
 	access_control:  accessControlFile,
