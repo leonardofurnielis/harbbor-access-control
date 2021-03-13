@@ -77,10 +77,10 @@ This methods loads the configuration to express-iam.
 | Option | Default | Description |
 | ------ |---------| ------------ |
 | access_control | `Array \| Function` | The access control array or function. |
-| [access_group_search_path] | `String` | The path in request object where access group resides. |
-| [custom_message] | `String` | The custom message when user is denied. |
-| [default_access_group] | `String` | The default access_group to be assigned if no role defined. |
-| [prefix] | `String` | The base URL of your api. e.g. `api/v1`. |
+| access_group_search_path | `String` | The path in request object where access group resides. |
+| custom_message | `String` | The custom message when user is denied. |
+| default_access_group | `String` | The default access_group to be assigned if no role defined. |
+| prefix | `String` | The base URL of your api. e.g. `api/v1`. |
   
 
 
@@ -99,17 +99,17 @@ expressIAM.config({
 
 // Using access control from array
 const  accessControlArray = [
-	{
-		group:  'admin',
-			permissions:  [
-				{
-					resource:  '*',
-					methods:  '*',
-					action:  'allow',
-				},
-			],
+  {
+	group:  'admin',
+	permissions:  [
+		{
+		resource:  '*',
+		methods:  '*',
+		action:  'allow',
 		},
-	];
+    ],
+  },
+];
 
 expressIAM.config({  
 access_control:  accessControlArray,  
