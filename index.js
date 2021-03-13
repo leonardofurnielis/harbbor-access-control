@@ -1,6 +1,6 @@
 'use strict';
 
-const AccessPolicies = require('./lib/access-policies-schema');
+const AccessControl = require('./lib/access-control-schema');
 const iam = require('./lib/iam');
 const { deny, findAGFromRequest } = require('./lib/common');
 
@@ -13,7 +13,7 @@ const authorize = () => {
   return function (req, res, next) {
     const accessGroup = findAGFromRequest(req, options.access_group_search_path);
     const isAllowed = iam(
-      options.access_policies,
+      options.access_control,
       req.path,
       req.method,
       accessGroup,
@@ -35,14 +35,14 @@ const authorize = () => {
  * @param {String} [params.default_access_group] - The default access_group to be assigned if no role defined.
  * @param {String} [params.custom_message] - The custom message when user is denied.
  * @param {String} [params.access_group_search_path] - The path in request object where access group resides.
- * @param {Array|Function} params.access_policies - The access policies array or function.
+ * @param {Array|Function} params.access_control - The access control array or function.
  */
 const config = (params = {}) => {
   options.prefix = params.prefix || undefined;
   options.default_access_group = params.default_access_group || undefined;
   options.custom_message = params.custom_message || undefined;
   options.access_group_search_path = params.access_group_search_path || undefined;
-  options.access_policies = AccessPolicies.validate(params);
+  options.access_control = AccessControl.validate(params);
 };
 
 module.exports = {

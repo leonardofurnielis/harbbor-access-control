@@ -25,11 +25,11 @@ $ npm install express-iam --save
 
   
 
-First step is to create your access policies, it could be stored in a database, file or a simple array, the structure should follow the below example.
+First step is to create your access control, it could be stored in a database, file or a simple array, the structure should follow the below example.
 
   
 
-### Definition of Access Policies
+### Definition of Access Control
 
 | Option | Default | Description |
 | ------ |---------| ------------ |
@@ -76,7 +76,7 @@ This methods loads the configuration to express-iam.
 
 | Option | Default | Description |
 | ------ |---------| ------------ |
-| access_policies | `Array \| Function` | The access policies array or function. |
+| access_control | `Array \| Function` | The access control array or function. |
 | [access_group_search_path] | `String` | The path in request object where access group resides. |
 | [custom_message] | `String` | The custom message when user is denied. |
 | [default_access_group] | `String` | The default access_group to be assigned if no role defined. |
@@ -90,15 +90,15 @@ const path = require('path');
 const fs = require('fs');
 const expressIAM = require('express-iam');
 
-// Using access policies from file
-const accessPoliciesFile =  fs.readFileSync(path.join(__dirname,  './access-policies/access-policies.json'));
+// Using access control from file
+const accessControlFile =  fs.readFileSync(path.join(__dirname,  './access-control/access-control.json'));
 expressIAM.config({
 	prefix:  '/api/v1',
-	access_policies:  accessPoliciesFile,
+	access_control:  accessControlFile,
 });
 
-// Using access policies from array
-const  accessPoliciesArray = [
+// Using access control from array
+const  accessControlArray = [
 	{
 		group:  'admin',
 			permissions:  [
@@ -112,7 +112,7 @@ const  accessPoliciesArray = [
 	];
 
 expressIAM.config({  
-access_policies:  accessPoliciesArray,  
+access_control:  accessControlArray,  
 prefix:  '/api/v1'  });
 ```
 

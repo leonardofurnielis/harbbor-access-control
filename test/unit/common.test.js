@@ -10,7 +10,7 @@ const {
   deny,
 } = require('../../lib/common');
 
-const accessPolicies = require('../mock/access-policies.json');
+const accessControl = require('../mock/access-control.json');
 
 describe('pathToArray()', () => {
   test('Should return tokens', () => {
@@ -55,11 +55,11 @@ describe('findAGFromRequest()', () => {
 
 describe('findAGPermission()', () => {
   test('Should return guest access group array', () => {
-    expect(findAGPermission(accessPolicies, 'guest')).toEqual(accessPolicies[0].permissions);
+    expect(findAGPermission(accessControl, 'guest')).toEqual(accessControl[0].permissions);
   });
 
   test('When access group not exist, should return false', () => {
-    expect(findAGPermission(accessPolicies, 'not_found_access_group')).toEqual(false);
+    expect(findAGPermission(accessControl, 'not_found_access_group')).toEqual(false);
   });
 });
 
@@ -78,21 +78,21 @@ describe('findRPPermission()', () => {
   ];
 
   test('Should return permissions for /test', () => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/test')).toEqual(permission);
+    expect(findRPPermission(accessControl[0].permissions, '/test')).toEqual(permission);
   });
 
   test('When using prefix routes, should return permissions for /test', () => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/api/v1/test', '/api/v1')).toEqual(
+    expect(findRPPermission(accessControl[0].permissions, '/api/v1/test', '/api/v1')).toEqual(
       permission
     );
   });
 
   test("When access group doesn't have permission, should return false ", () => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/home')).toEqual(false);
+    expect(findRPPermission(accessControl[0].permissions, '/home')).toEqual(false);
   });
 
   test('When request path not found, should return false', () => {
-    expect(findRPPermission(accessPolicies[0].permissions, '/foo')).toEqual(false);
+    expect(findRPPermission(accessControl[0].permissions, '/foo')).toEqual(false);
   });
 });
 
@@ -108,7 +108,7 @@ describe('findMethodPermission()', () => {
     expect(findMethodPermission(permission, 'GET')).toEqual(permission);
   });
 
-  test('When access policies method is *, should return permissions for * /test', () => {
+  test('When access control method is *, should return permissions for * /test', () => {
     const permission = [
       {
         resource: '/test',
@@ -120,7 +120,7 @@ describe('findMethodPermission()', () => {
   });
 
   test("Should return false when group don't have permission to this method", () => {
-    expect(findRPPermission(accessPolicies[0].permissions, 'POST')).toEqual(false);
+    expect(findRPPermission(accessControl[0].permissions, 'POST')).toEqual(false);
   });
 
   test('When multiple permission and deny specific method, should return false', () => {
@@ -193,7 +193,7 @@ describe('findMethodPermission()', () => {
 });
 
 describe('isAllowed()', () => {
-  test('When action is allow, should return access policies for /test', () => {
+  test('When action is allow, should return access control for /test', () => {
     const permission = [
       {
         resource: '/test',
