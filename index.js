@@ -7,7 +7,8 @@ const { deny, findAGFromRequest } = require('./lib/common');
 const options = {};
 
 /**
- * Express IAM middleware.
+ * @description Express IAM middleware.
+ * @return {Function}
  */
 const authorize = () => {
   return function (req, res, next) {
@@ -29,7 +30,7 @@ const authorize = () => {
 };
 
 /**
- * Express IAM configuration.
+ * @description Express IAM configuration.
  * @param {Object} params
  * @param {String} [params.prefix] - The base URL of your api. e.g. `api/v1`.
  * @param {String} [params.default_access_group] - The default access_group to be assigned if no role defined.
