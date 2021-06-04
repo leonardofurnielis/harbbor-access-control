@@ -30,6 +30,7 @@ First step is to create your access control, it could be stored in a database, f
 | methods | `String \| Array` | The methods that the permission will be applied. Use `*` to include all methods. |
 | action | `String` | This property tells `express-iam` what action will be applied on the permission, deny or allow. |
 
+#### Example
 
 ```json
 [
@@ -77,7 +78,8 @@ This methods loads the configuration to express-iam.
 | custom_message | `String` | The custom message when user is denied. |
 | default_access_group | `String` | The default access_group to be assigned if no role defined. |
 | prefix | `String` | The base URL of your api. e.g. `api/v1`. |
-  
+
+#### Example
 
 ```js
 const app = require('express');
@@ -118,6 +120,8 @@ This methods is the middleware to express-iam manage your requests.
 
 In an [express](https://www.npmjs.com/package/express) based application:
 
+#### Example
+
 ```js
 const express = require('express');
 const app = express();
@@ -136,6 +140,8 @@ By default, express-iam will block any route that does not have access control d
 | paths | `String\|Array` | String or an array of string containing the path to be skipped. It also could be an array of object which is `path` and `methods` key-pairs. |
 | methods | `String\|Array` | String or an array of string containing the methods to be skipped. |
 | useOriginalUrl | `Boolean` | It could be `true` or `false`, default is `true`. if `false`, path will match against `req.url` instead of `req.originalUrl`. Please refer to [express](https://www.npmjs.com/package/express) for the difference between `req.url` and `req.originalUrl`. |
+
+#### Example
 
 ```js
 const express = require('express');
