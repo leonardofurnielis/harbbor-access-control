@@ -109,15 +109,15 @@ expressIAM.config({
 // Using access control from array
 const  accessControlArray = [
   {
-	group:  'admin',
-	permissions:  [
-		{
-		path:  '*',
-		methods:  '*',
-		action:  'allow',
-		},
-    ],
-  },
+    "group":"admin",
+    "permissions":[
+      {
+        "path":"*",
+        "methods":"*",
+        "action":"allow"
+      }
+    ]
+  }
 ];
 
 expressIAM.config({  
