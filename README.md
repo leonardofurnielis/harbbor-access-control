@@ -142,11 +142,12 @@ app.use(expressIAM.authorize());
 
 By default, express-iam will block any route that does not have access control defined. This method allows you to create exceptions for routes that did not use express-iam.
 
-| Option | Description |
-| ------ | ------------ |
-| paths | It could be an string or an array of string. It also could be an array of object which is `path` and `methods` key-pairs. |
-| methods | It must be a string or an array of strings. |
-| useOriginalUrl | It could be `true` or `false`, default is `true`. if `false`, path will match against `req.url` instead of `req.originalUrl`. Please refer to [express](https://www.npmjs.com/package/express) for the difference between `req.url` and `req.originalUrl`. |
+
+| Option | Type | Description |
+| ------ |---------| ------------ |
+| paths | `String|Array` | String or an array of string containing the path to be skipped. It also could be an array of object which is `path` and `methods` key-pairs. |
+| methods | `String|Array` | String or an array of string containing the methods to be skipped. |
+| useOriginalUrl | `Boolean` | It could be `true` or `false`, default is `true`. if `false`, path will match against `req.url` instead of `req.originalUrl`. Please refer to [express](https://www.npmjs.com/package/express) for the difference between `req.url` and `req.originalUrl`. |
 
 ```js
 const express = require('express');
