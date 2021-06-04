@@ -43,31 +43,29 @@ First step is to create your access control, it could be stored in a database, f
 
 ```json
 [
-	{
+ {
 	"access_group":  "admin",
 	"permissions": [
-		{
+  {
 		"path":  "*",
 		"methods":  "*",
 		"action":  "allow"
-		}
-		]
-	},
-	{
+	}]
+ },
+ {
 	"access_group":  "guest",
 	"permissions": [
-		{
+	{
 		"path":  "/foo",
 		"methods": ["POST"],
 		"action":  "allow"
-		},
-		{
+	},
+	{
 		"path":  "/foo2",
 		"methods": ["POST","UPDATE"],
 		"action":  "deny"
-		}
-		]
- 	}
+	}]
+ }
 ]
 
 ```
