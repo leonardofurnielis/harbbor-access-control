@@ -50,12 +50,12 @@ First step is to create your access control, it could be stored in a database, f
 		"path":  "*",
 		"methods":  "*",
 		"action":  "allow"
-	}]
+  }]
  },
  {
 	"access_group":  "guest",
 	"permissions": [
-	{
+  {
 		"path":  "/foo",
 		"methods": ["POST"],
 		"action":  "allow"
@@ -64,7 +64,7 @@ First step is to create your access control, it could be stored in a database, f
 		"path":  "/foo2",
 		"methods": ["POST","UPDATE"],
 		"action":  "deny"
-	}]
+  }]
  }
 ]
 
