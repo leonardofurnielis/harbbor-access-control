@@ -131,6 +131,18 @@ app.use(expressIAM.authorize());
 
 ```
 
+### unless\[type: function]
+
+By default, express-iam will block any route that does not have access control defined. This method allows you to create exceptions for routes that did not use express-iam.
+
+```js
+const express = require('express');
+const app = express();
+
+app.use(expressIAM.authorize().unless({paths: ['/foo']}));
+
+```
+
 ##  License
 
   
