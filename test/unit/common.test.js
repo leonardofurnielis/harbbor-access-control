@@ -66,12 +66,12 @@ describe('findAGPermission()', () => {
 describe('findRPPermission()', () => {
   const permission = [
     {
-      resource: '/test',
+      path: '/test',
       methods: ['GET'],
       action: 'allow',
     },
     {
-      resource: '/test',
+      path: '/test',
       methods: ['POST'],
       action: 'deny',
     },
@@ -100,7 +100,7 @@ describe('findMethodPermission()', () => {
   test('Should return permissions for GET /test', () => {
     const permission = [
       {
-        resource: '/test',
+        path: '/test',
         methods: ['GET'],
         action: 'allow',
       },
@@ -111,7 +111,7 @@ describe('findMethodPermission()', () => {
   test('When access control method is *, should return permissions for * /test', () => {
     const permission = [
       {
-        resource: '/test',
+        path: '/test',
         methods: '*',
         action: 'allow',
       },
@@ -126,12 +126,12 @@ describe('findMethodPermission()', () => {
   test('When multiple permission and deny specific method, should return false', () => {
     const permission = [
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: '*',
         action: 'allow',
       },
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: 'UPDATE',
         action: 'deny',
       },
@@ -142,12 +142,12 @@ describe('findMethodPermission()', () => {
   test('When multiple permission allow all methods, should return permission for * /test', () => {
     const permission = [
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: '*',
         action: 'allow',
       },
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: 'UPDATE',
         action: 'deny',
       },
@@ -159,12 +159,12 @@ describe('findMethodPermission()', () => {
   test('When multiple permission and allow specific method, should return permission for UPDATE /test/1', () => {
     const permission = [
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: '*',
         action: 'deny',
       },
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: 'UPDATE',
         action: 'allow',
       },
@@ -176,12 +176,12 @@ describe('findMethodPermission()', () => {
   test('When multiple permission deny all methods, should return false', () => {
     const permission = [
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: '*',
         action: 'deny',
       },
       {
-        resource: '/test/1',
+        path: '/test/1',
         methods: 'UPDATE',
         action: 'allow',
       },
@@ -196,7 +196,7 @@ describe('isAllowed()', () => {
   test('When action is allow, should return access control for /test', () => {
     const permission = [
       {
-        resource: '/test',
+        path: '/test',
         methods: ['GET'],
         action: 'allow',
       },
@@ -207,7 +207,7 @@ describe('isAllowed()', () => {
   test('When action is deny, should return false', () => {
     const permission = [
       {
-        resource: '/test',
+        path: '/test',
         methods: '*',
         action: 'deny',
       },

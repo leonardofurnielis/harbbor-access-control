@@ -36,7 +36,7 @@ First step is to create your access control, it could be stored in a database, f
 | ------ |---------| ------------ |
 | access_group | `String` | The access group with name. |
 | permissions | `Array` | Array of permissions that defined to an access group, to allow or deny. |
-| resource | `String` | The route that the permission will be applied. Use `*` to include all routes or sub-routes. e.g. `/foo/*`. |
+| path | `String` | The route that the permission will be applied. Use `*` to include all routes or sub-routes. e.g. `/foo/*`. |
 | methods | `String \| Array` | The methods that the permission will be applied. Use `*` to include all methods. |
 | action | `String` | This property tells `express-iam` what action will be applied on the permission, deny or allow. |
 
@@ -47,7 +47,7 @@ First step is to create your access control, it could be stored in a database, f
 	"access_group":  "admin",
 	"permissions": [
 		{
-		"resource":  "*",
+		"path":  "*",
 		"methods":  "*",
 		"action":  "allow"
 		}
@@ -57,12 +57,12 @@ First step is to create your access control, it could be stored in a database, f
 	"access_group":  "guest",
 	"permissions": [
 		{
-		"resource":  "/foo",
+		"path":  "/foo",
 		"methods": ["POST"],
 		"action":  "allow"
 		},
 		{
-		"resource":  "/foo2",
+		"path":  "/foo2",
 		"methods": ["POST","UPDATE"],
 		"action":  "deny"
 		}
@@ -107,7 +107,7 @@ const  accessControlArray = [
 	group:  'admin',
 	permissions:  [
 		{
-		resource:  '*',
+		path:  '*',
 		methods:  '*',
 		action:  'allow',
 		},

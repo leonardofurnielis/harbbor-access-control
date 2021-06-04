@@ -1,7 +1,14 @@
+/*
+ * express-iam
+ * Copyright 2019-2021 Leonardo Furnielis.
+ * Licensed under MIT License
+ */
+
 'use strict';
 
 const AccessControl = require('./lib/access-control-schema');
 const iam = require('./lib/iam');
+const unless = require('./lib/unless');
 const { deny, findAGFromRequest } = require('./lib/common');
 
 const options = {};
@@ -28,6 +35,8 @@ const authorize = () => {
     }
   };
 };
+
+authorize.unless = unless;
 
 /**
  * @description Express IAM configuration.

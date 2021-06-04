@@ -18,7 +18,7 @@ describe('AccessControlSchema validate()', () => {
       access_group: 'admin',
       permissions: [
         {
-          resource: '/home',
+          path: '/home',
           methods: '*',
           action: 'allow',
         },

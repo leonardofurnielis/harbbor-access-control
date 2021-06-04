@@ -3,27 +3,27 @@
     "access_group": "guest",
     "permissions": [
       {
-        "resource": "/test",
+        "path": "/test",
         "methods": ["GET"],
         "action": "allow"
       },
       {
-        "resource": "/test",
+        "path": "/test",
         "methods": ["POST"],
         "action": "deny"
       },
       {
-        "resource": "/test/1",
+        "path": "/test/1",
         "methods": "*",
         "action": "allow"
       },
       {
-        "resource": "/test/1",
+        "path": "/test/1",
         "methods": "UPDATE",
         "action": "deny"
       },
       {
-        "resource": "/access",
+        "path": "/access",
         "methods": "*",
         "action": "deny"
       }
@@ -33,7 +33,7 @@
     "access_group": "admin",
     "permissions": [
       {
-        "resource": "/home",
+        "path": "/home",
         "methods": "*",
         "action": "allow"
       }
