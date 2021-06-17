@@ -17,13 +17,15 @@
     "identity",
     "access",
     "management",
-    "access-management",
-    "access-control",
+    "access management",
+    "access control",
     "iam",
     "policy",
     "role",
     "permissions",
-    "security"
+    "security",
+    "role based"
+    "rbac
   ],
   "repository": {
     "type": "git",
